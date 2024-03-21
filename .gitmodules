@@ -1,0 +1,3 @@
+[submodule "Mask_RCNN_575"]
+	path = Mask_RCNN_575
+	url = https://github.com/JacobFrieden/Mask_RCNN_575
