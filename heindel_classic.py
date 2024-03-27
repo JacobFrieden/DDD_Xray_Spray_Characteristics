@@ -46,6 +46,16 @@ def identify_droplets(image_path, aspect_ratio_range=(0.8, 1.2)):
 
     num_ccs, ccs, stats, centroids = cv2.connectedComponentsWithStats(c2ibw)
     cv2.imwrite(f'training_data/masks/{image_path[-10:-4]}.png', ccs)
+    for i in range(1,5):
+        CROP_SIZE = 250
+        c1 = np.random.randint(0,image.shape[0]-CROP_SIZE)
+        c2 = np.random.randint(0, image.shape[1]-CROP_SIZE)
+        cropped_image = image[c1:c1+CROP_SIZE, c2:c2+CROP_SIZE]
+        cropped_c2ibw = c2ibw[c1:c1+CROP_SIZE, c2:c2+CROP_SIZE]
+        cropped_c2ibw = cv2.dilate(cv2.erode(cropped_c2ibw, np.ones((3,3))), np.ones((3,3)))
+        cropped_num_ccs, c_ccs, c_stats, c_centroids = cv2.connectedComponentsWithStats(cropped_c2ibw)
+        cv2.imwrite(f'training_data/IMGs/{image_path.split(os.sep)[-1][:-4]}_{i}.tif', cropped_image)
+        cv2.imwrite(f'training_data/masks/{image_path[-10:-4]}_{i}.png', c_ccs)
     # print(max(stats[1:,cv2.CC_STAT_AREA]))
     # print(min(stats[1:,cv2.CC_STAT_AREA]))
     # print(np.median(stats[1:,cv2.CC_STAT_AREA]))
@@ -81,3 +91,5 @@ def identify_droplets(image_path, aspect_ratio_range=(0.8, 1.2)):
 IMAGERY_DIR = 'training_data/IMGs'
 for file in os.listdir(os.path.join('',IMAGERY_DIR)):
     identify_droplets(os.path.join(IMAGERY_DIR, file))
+    # print(cv2.imread(os.path.join(IMAGERY_DIR, file)).shape)
+
