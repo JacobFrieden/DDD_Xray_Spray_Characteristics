@@ -78,4 +78,4 @@ if __name__ == '__main__':
 
     test = MPFDataset('Processed Data/test', get_transform(train=False))
     # evaluate(model, test_data_loader, device=device)
-    inference(model, NUM_TEST_IMGS, FIG_DIR, device)
+    inference(model, test, NUM_TEST_IMGS, FIG_DIR, device)
