@@ -9,9 +9,7 @@ import utils
 from myTV_MRCNN import get_model_instance_segmentation, get_transform, MPFDataset
 from engine import evaluate
 
-
-
-def inference(model, num_test_imgs, fig_dir):
+def inference(model, num_test_imgs, fig_dir, device):
     print('starting evaluation')
     os.makedirs(fig_dir, exist_ok=True)
     model.eval()
@@ -80,4 +78,4 @@ if __name__ == '__main__':
 
     test = MPFDataset('Processed Data/test', get_transform(train=False))
     # evaluate(model, test_data_loader, device=device)
-    inference(model, NUM_TEST_IMGS, FIG_DIR)
+    inference(model, NUM_TEST_IMGS, FIG_DIR, device)
